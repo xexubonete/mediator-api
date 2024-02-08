@@ -23,7 +23,7 @@ The Mediator pattern facilitates communication between components of a system wi
 
 1. Clone this repository to your local machine:
    
-git clone https://github.com/xexubonete/webapi-docker.git
+   `git clone https://github.com/xexubonete/webapi-docker.git`
 
 3. Open the project in Visual Studio or your preferred code editor.
 
@@ -41,14 +41,14 @@ This project is Dockerized, allowing easy deployment and scalability. To run the
 1. Make sure you have Docker installed on your machine.
 2. Navigate to the root directory of the project in your terminal.
 3. Build the Docker image using the provided Dockerfile:
-   
-   docker build -t webapi-app .
-   
-4. Once the image is built, run a Docker container:
 
-   docker run -d -p 8080:80 --name webapi-container webapi-app
+   `docker build -t webapi-app .`
+   
+5. Once the image is built, run a Docker container:
 
-5. Access the application through `http://localhost:8080` in your web browser or any HTTP client.
+   `docker run -d -p 8080:80 --name webapi-container webapi-app`
+
+6. Access the application through `http://localhost:8080` in your web browser or any HTTP client.
 
 ## Contribution
 
@@ -62,8 +62,7 @@ If you wish to contribute to this project, follow these steps:
 
 ## Authors
 
-- Author 1
-- Author 2
+- Jesus Bonete (xexubonete)
 
 ## License
 
