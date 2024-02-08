@@ -10,7 +10,7 @@ The Mediator pattern facilitates communication between components of a system wi
 
 - **Controllers**: Contains controllers that handle incoming HTTP requests and route them to the corresponding handlers.
 - **Mediator**: Contains classes related to implementing the Mediator pattern, such as the Mediator itself, commands, queries, and command/query handlers.
-- **Services**: Contains application services that encapsulate business logic and are used in command/query handlers.
+- **Interfaces**: Contains interfaces used for application services that encapsulate business logic. These interfaces are implemented by command/query handlers to perform the desired operations.
 - **Dockerfile**: Defines the Docker image configuration for building and running the application in a containerized environment.
 
 ## System Requirements
@@ -68,9 +68,6 @@ If you wish to contribute to this project, follow these steps:
 
 This project is licensed under the [MIT License](LICENSE).
 
-## Acknowledgments
-
-We would like to thank all the individuals who contributed to this project and the developer community for their support and valuable resources.
 
 
 
