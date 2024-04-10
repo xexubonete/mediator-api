@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using webapi_docker.Entities;
 using webapi_docker.Interfaces;
@@ -27,15 +26,22 @@ namespace webapi_docker.Queries
             /// <returns>Response from the request</returns>
             public async Task<Product> Handle(GetProductByNameQuery request, CancellationToken cancellationToken)
             {
-                var product = await _context.Products
-                    .FirstOrDefaultAsync(x => x.Name == request.Name);
-
-                if (product == null)
+                try
                 {
-                    throw new Exception("No names founded" + nameof(Product));
-                }
+                    var product = await _context.Products
+                        .FirstOrDefaultAsync(x => x.Name == request.Name);
 
-                return product;
+                    if (product == null)
+                    {
+                        throw new Exception("No names founded" + nameof(Product));
+                    }
+
+                    return product;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("", ex);
+                }
             }
         }
     }

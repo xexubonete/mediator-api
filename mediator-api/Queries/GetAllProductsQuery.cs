@@ -18,11 +18,18 @@ namespace webapi_docker.Queries
 
             public async Task<IList<Product>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
             {
-                var products = await _context.Products
-                    .OrderBy(x => x.Name)
-                    .ToListAsync();
+                try
+                {
+                    var products = await _context.Products
+                        .OrderBy(x => x.Name)
+                        .ToListAsync();
 
-                return products;
+                    return products;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("", ex);
+                }
             }
         }
     }

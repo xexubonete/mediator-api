@@ -26,15 +26,22 @@ namespace webapi_docker.Queries
             /// <returns>Response from the request</returns>
             public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
             {
-                var product = await _context.Products
-                    .FirstOrDefaultAsync(x => x.Id == request.Id);
-
-                if (product == null)
+                try
                 {
-                    throw new Exception("No product founded" + nameof(Product));
-                }
+                    var product = await _context.Products
+                        .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                return product;
+                    if (product == null)
+                    {
+                        throw new Exception("No product founded" + nameof(Product));
+                    }
+
+                    return product;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("", ex);
+                }
             }
         }
     }
