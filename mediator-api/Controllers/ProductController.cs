@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using webapi_docker.Commands;
 using webapi_docker.Entities;
 using webapi_docker.Queries;
@@ -30,9 +29,13 @@ namespace webapi_docker.Controllers
         /// </returns>
         [HttpGet]
         [Route("[action]/{Id}")]
-        public async Task<ActionResult<Product>> GetProductById(Guid Id)
+        public async Task<ActionResult<Product>> GetProductById(Guid id)
         {
-            var result = await this.Mediator.Send(new GetProductByIdQuery { Id = Id });
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+            var result = await this.Mediator.Send(new GetProductByIdQuery { Id = id });
 
             return Ok(result);
         }
@@ -46,6 +49,10 @@ namespace webapi_docker.Controllers
         [Route("/{Name}")]
         public async Task<ActionResult<Product>> GetProductByName(string Name)
         {
+            if (Name == null || Name == "")
+            {
+                return BadRequest();
+            }
             var result = await this.Mediator.Send(new GetProductByNameQuery { Name = Name });
 
             return Ok(result);
@@ -92,6 +99,10 @@ namespace webapi_docker.Controllers
         [Route("/{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
             await this.Mediator.Send(new DeleteProductCommand { Id = id });
 
             return Ok();
