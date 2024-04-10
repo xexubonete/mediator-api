@@ -19,7 +19,7 @@ namespace webapi_docker.Controllers
         {
             var products = await this.Mediator.Send(new GetAllProductsQuery());
 
-            if (products == null)
+            if (!products.Any())
             {
                 return NotFound();
             }
