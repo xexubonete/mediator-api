@@ -17,9 +17,9 @@ namespace webapi_docker.Controllers
         [Route("[action]")]
         public async Task<ActionResult<IList<Product>>> GetAllProducts() 
         {
-            var result = await this.Mediator.Send(new GetAllProductsQuery());
+            var products = await this.Mediator.Send(new GetAllProductsQuery());
 
-            return Ok(result);
+            return Ok(products);
         }
 
         /// <summary>Gets the product by identifier.</summary>
@@ -35,9 +35,9 @@ namespace webapi_docker.Controllers
             {
                 return BadRequest();
             }
-            var result = await this.Mediator.Send(new GetProductByIdQuery { Id = id });
+            var product = await this.Mediator.Send(new GetProductByIdQuery { Id = id });
 
-            return Ok(result);
+            return Ok(product);
         }
 
         /// <summary>Gets the name of the product by.</summary>
@@ -53,9 +53,9 @@ namespace webapi_docker.Controllers
             {
                 return BadRequest();
             }
-            var result = await this.Mediator.Send(new GetProductByNameQuery { Name = Name });
+            var product = await this.Mediator.Send(new GetProductByNameQuery { Name = Name });
 
-            return Ok(result);
+            return Ok(product);
         }
 
         /// <summary>Creates the product.</summary>
@@ -67,9 +67,9 @@ namespace webapi_docker.Controllers
         [Route("/create")]
         public async Task<ActionResult<Product>> CreateProduct(CreateProductCommand command)
         {
-            var result = await this.Mediator.Send(command);
+            var product = await this.Mediator.Send(command);
 
-            return Ok(result);
+            return Ok(product);
         }
 
         /// <summary>Updates the product.</summary>
@@ -85,9 +85,9 @@ namespace webapi_docker.Controllers
             {
                 return BadRequest();
             }
-            var result = await this.Mediator.Send(command);
+            var product = await this.Mediator.Send(command);
 
-            return Ok(result);
+            return Ok(product);
         }
 
         /// <summary>Deletes the product.</summary>
