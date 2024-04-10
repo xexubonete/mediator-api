@@ -19,6 +19,11 @@ namespace webapi_docker.Controllers
         {
             var products = await this.Mediator.Send(new GetAllProductsQuery());
 
+            if (products == null)
+            {
+                return NotFound();
+            }
+
             return Ok(products);
         }
 
@@ -31,11 +36,12 @@ namespace webapi_docker.Controllers
         [Route("[action]/{Id}")]
         public async Task<ActionResult<Product>> GetProductById(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                return BadRequest();
-            }
             var product = await this.Mediator.Send(new GetProductByIdQuery { Id = id });
+
+            if (product == null)
+            {
+                return NotFound();
+            }
 
             return Ok(product);
         }
@@ -49,11 +55,12 @@ namespace webapi_docker.Controllers
         [Route("/{Name}")]
         public async Task<ActionResult<Product>> GetProductByName(string Name)
         {
-            if (Name == null || Name == "")
-            {
-                return BadRequest();
-            }
             var product = await this.Mediator.Send(new GetProductByNameQuery { Name = Name });
+
+            if (product == null)
+            {
+                return NotFound();
+            }
 
             return Ok(product);
         }
@@ -69,6 +76,11 @@ namespace webapi_docker.Controllers
         {
             var product = await this.Mediator.Send(command);
 
+            if (product == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(product);
         }
 
@@ -81,11 +93,12 @@ namespace webapi_docker.Controllers
         [Route("/{Id}")]
         public async Task<ActionResult<Product>> UpdateProduct(Guid Id, UpdateProductCommand command)
         {
-            if (Id != command.Id)
-            {
-                return BadRequest();
-            }
             var product = await this.Mediator.Send(command);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
 
             return Ok(product);
         }
@@ -99,10 +112,6 @@ namespace webapi_docker.Controllers
         [Route("/{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                return BadRequest();
-            }
             await this.Mediator.Send(new DeleteProductCommand { Id = id });
 
             return Ok();
