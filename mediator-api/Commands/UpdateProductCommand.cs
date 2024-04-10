@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using webapi_docker.Entities;
 using webapi_docker.Interfaces;
 
@@ -30,20 +29,27 @@ namespace webapi_docker.Commands
 
             public async Task<Product> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
             {
-                var product = await _context.Products
-                    .FindAsync(request.Id);
-
-                if (product == null)
+                try
                 {
-                    throw new Exception("No product founded" + nameof(Product));
+                    var product = await _context.Products
+                        .FindAsync(request.Id);
+
+                    if (product == null)
+                    {
+                        throw new Exception("No product founded" + nameof(Product));
+                    }
+
+                    product.Name = request.Name;
+                    product.Price = request.Price;
+
+                    await _context.SaveChangesAsync();
+
+                    return product;
                 }
-
-                product.Name = request.Name;
-                product.Price = request.Price;
-
-                await _context.SaveChangesAsync();
-
-                return product;
+                catch (Exception ex)
+                {
+                    throw new Exception("", ex);
+                }
             }
         }
     }

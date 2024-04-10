@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using webapi_docker.Entities;
 using webapi_docker.Interfaces;
-using webapi_docker.Persistence;
 
 namespace webapi_docker.Commands
 {
@@ -36,18 +35,25 @@ namespace webapi_docker.Commands
             /// <returns>Response from the request</returns>
             public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
             {
-                var newProduct = new Product
+                try
                 {
-                    Id = Guid.NewGuid(),
-                    Name = request.Name,
-                    Price = request.Price
-                };
+                    var newProduct = new Product
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = request.Name,
+                        Price = request.Price
+                    };
 
-                _context.Products.Add(newProduct);
+                    _context.Products.Add(newProduct);
 
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
 
-                return newProduct;
+                    return newProduct;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("", ex);
+                }
             }
         }
     }

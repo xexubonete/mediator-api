@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using webapi_docker.Entities;
 using webapi_docker.Interfaces;
@@ -22,19 +21,25 @@ namespace webapi_docker.Commands
 
             public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
             {
-                var product = await _context.Products
-                    .Where(x => x.Id == request.Id)
-                    .FirstOrDefaultAsync();
-
-                if (product == null)
+                try
                 {
-                    throw new Exception("No product founded" + nameof(Product));
+                    var product = await _context.Products
+                        .Where(x => x.Id == request.Id)
+                        .FirstOrDefaultAsync();
+
+                    if (product == null)
+                    {
+                        throw new Exception("No product founded" + nameof(Product));
+                    }
+
+                    _context.Products.Remove(product);
+
+                    await _context.SaveChangesAsync();
                 }
-
-                _context.Products.Remove(product);
-
-                await _context.SaveChangesAsync();
-
+                catch (Exception ex)
+                {
+                    throw new Exception("", ex);
+                }
             }
         }
     }
