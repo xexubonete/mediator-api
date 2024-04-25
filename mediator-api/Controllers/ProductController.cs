@@ -14,7 +14,6 @@ namespace webapi_docker.Controllers
         ///   <br />
         /// </returns>
         [HttpGet]
-        [Route("[action]")]
         public async Task<ActionResult<IList<Product>>> GetAllProducts() 
         {
             var products = await this.Mediator.Send(new GetAllProductsQuery());
@@ -32,8 +31,7 @@ namespace webapi_docker.Controllers
         /// <returns>
         ///   <br />
         /// </returns>
-        [HttpGet]
-        [Route("[action]/{Id}")]
+        [HttpGet("id")]
         public async Task<ActionResult<Product>> GetProductById(Guid id)
         {
             var product = await this.Mediator.Send(new GetProductByIdQuery { Id = id });
@@ -51,8 +49,7 @@ namespace webapi_docker.Controllers
         /// <returns>
         ///   <br />
         /// </returns>
-        [HttpGet]
-        [Route("/{Name}")]
+        [HttpGet("name")]
         public async Task<ActionResult<Product>> GetProductByName(string Name)
         {
             var product = await this.Mediator.Send(new GetProductByNameQuery { Name = Name });
