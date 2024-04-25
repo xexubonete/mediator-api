@@ -6,8 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /mediator-api
 
 ##Exponer los dos puertos con los que vamos a trabajar
-EXPOSE 80
-EXPOSE 5024
+EXPOSE 432
 
 ### COPIAMOS EL CSPROJ
 ##Copia el csproj en la ruta donde se encuentra al mismo directorio
@@ -22,7 +21,7 @@ COPY . .
 RUN dotnet publish -c Release -o /mediator-api/publish
 
 ###CONSTRUIMOS LA IMAGEN
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 WORKDIR /mediator-api
 COPY --from=build /mediator-api/publish .
 ENTRYPOINT ["dotnet", "mediator-api.dll"]
