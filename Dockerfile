@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /mediator-api
 
 ##Exponer los dos puertos con los que vamos a trabajar
-EXPOSE 432
+EXPOSE 5024
 
 ### COPIAMOS EL CSPROJ
 ##Copia el csproj en la ruta donde se encuentra al mismo directorio
