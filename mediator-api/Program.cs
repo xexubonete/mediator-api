@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 //{
 //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductAPI", Version = "v1" });
 
-//    // Ruta al archivo XML de documentación generado
+//    Ruta al archivo XML de documentaciï¿½n generado
 //    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 //    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 //    c.IncludeXmlComments(xmlPath);
@@ -30,6 +30,13 @@ builder.Services.AddSwaggerGen();
 // Custom : Dependecy injection
 builder.Services.AddInjection(builder.Configuration);
 builder.Services.AddScoped<IApiDbContext, ApiDbContext>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(conf =>
+    {
+        conf.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -39,10 +46,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.UseCors();
+
+app.Run("http://localhost:5024");
