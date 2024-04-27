@@ -1,9 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
 using webapi_docker;
-using webapi_docker.Commands;
-using webapi_docker.Controllers;
 using webapi_docker.Interfaces;
 using webapi_docker.Persistence;
 
@@ -55,4 +50,4 @@ app.MapControllers();
 
 app.UseCors();
 
-app.Run("http://localhost:5024");
+app.Run();
