@@ -1,0 +1,20 @@
+version: "2.24.7"
+services:
+  mediator-api:
+    build: .
+    ports: 
+      - "5024:8080"
+    links:
+      - sqlserver
+  sqlserver:	
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Sqlserver0001&
+    volumes:
+      - sqlserver-data:/var/opt/mssql/data
+volumes:
+  sqlserver-data:
