@@ -23,7 +23,7 @@ namespace webapi_docker.Controllers
                 return NotFound();
             }
 
-            return Ok(products);
+            return Ok(productss);
         }
 
         /// <summary>Gets the product by identifier.</summary>
