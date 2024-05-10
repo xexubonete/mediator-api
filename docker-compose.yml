@@ -4,7 +4,7 @@ services:
     build: .
     ports: 
       - "5024:8080"
-    links:
+    depends_on:
       - sqlserver
   sqlserver:	
     image: mcr.microsoft.com/mssql/server:2019-latest
