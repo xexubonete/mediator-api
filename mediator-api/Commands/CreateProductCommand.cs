@@ -18,16 +18,9 @@ namespace webapi_docker.Commands
         /// <value>The price.</value>
         public double Price { get; set; }
 
-        public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product> 
+        public class CreateProductCommandHandler(IApiDbContext context) : IRequestHandler<CreateProductCommand, Product> 
         {
-            private readonly IApiDbContext _context;
-
-            /// <summary>Initializes a new instance of the <see cref="CreateProductCommandHandler" /> class.</summary>
-            /// <param name="context">The context.</param>
-            public CreateProductCommandHandler(IApiDbContext context)
-            {
-                _context = context;
-            }
+            private readonly IApiDbContext _context = context;
 
             /// <summary>Handles a request</summary>
             /// <param name="request">The request</param>

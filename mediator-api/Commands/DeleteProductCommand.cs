@@ -10,14 +10,9 @@ namespace webapi_docker.Commands
         /// <summary>Gets or sets the identifier.</summary>
         /// <value>The identifier.</value>
         public Guid Id { get; set; }
-        public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
+        public class DeleteProductCommandHandler(IApiDbContext context) : IRequestHandler<DeleteProductCommand>
         {
-            private readonly IApiDbContext _context;
-
-            public DeleteProductCommandHandler(IApiDbContext context)
-            {
-                _context = context;
-            }
+            private readonly IApiDbContext _context = context;
 
             public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
             {

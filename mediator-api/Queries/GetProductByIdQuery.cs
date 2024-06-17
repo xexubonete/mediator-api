@@ -11,14 +11,9 @@ namespace webapi_docker.Queries
         /// <value>The identifier.</value>
         public Guid Id { get; set; }
 
-        public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product>
+        public class GetProductByIdQueryHandler(IApiDbContext context) : IRequestHandler<GetProductByIdQuery, Product>
         {
-            private readonly IApiDbContext _context;
-
-            public GetProductByIdQueryHandler(IApiDbContext context)
-            {
-                _context = context;
-            }
+            private readonly IApiDbContext _context = context;
 
             /// <summary>Handles a request</summary>
             /// <param name="request">The request</param>

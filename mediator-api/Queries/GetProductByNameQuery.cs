@@ -11,14 +11,9 @@ namespace webapi_docker.Queries
         /// <value>The name.</value>
         public string? Name { get; set; }
 
-        public class GetProductByNameQueryHandler : IRequestHandler<GetProductByNameQuery, Product>
+        public class GetProductByNameQueryHandler(IApiDbContext context) : IRequestHandler<GetProductByNameQuery, Product>
         {
-            private readonly IApiDbContext _context;
-
-            public GetProductByNameQueryHandler(IApiDbContext context)
-            {
-                _context = context;
-            }
+            private readonly IApiDbContext _context = context;
 
             /// <summary>Handles a request</summary>
             /// <param name="request">The request</param>

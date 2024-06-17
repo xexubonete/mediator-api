@@ -7,14 +7,9 @@ namespace webapi_docker.Queries
 {
     public class GetAllProductsQuery : IRequest<IList<Product>>
     {
-        public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, IList<Product>>
+        public class GetAllProductsQueryHandler(IApiDbContext context) : IRequestHandler<GetAllProductsQuery, IList<Product>>
         {
-            private readonly IApiDbContext _context;
-
-            public GetAllProductsQueryHandler(IApiDbContext context)
-            {
-                _context = context;
-            }
+            private readonly IApiDbContext _context = context;
 
             public async Task<IList<Product>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
             {

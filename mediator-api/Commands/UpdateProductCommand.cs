@@ -18,14 +18,9 @@ namespace webapi_docker.Commands
         /// <value>The price.</value>
         public double Price { get; set; }
 
-        public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Product>
+        public class UpdateProductCommandHandler(IApiDbContext context) : IRequestHandler<UpdateProductCommand, Product>
         {
-            private readonly IApiDbContext _context;
-
-            public UpdateProductCommandHandler(IApiDbContext context)
-            {
-                _context = context;
-            }
+            private readonly IApiDbContext _context = context;
 
             public async Task<Product> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
             {
