@@ -1,6 +1,6 @@
-# ASP.NET WebApi with Mediator Pattern and Docker Support
+# Mediator-api with Mediator Pattern and Docker Support
 
-This ASP.NET WebApi project is designed using the Mediator pattern to handle commands and queries. It utilizes .NET 8.0 and provides an organized structure for handling HTTP requests and performing operations in the application layer. Additionally, it's Dockerized for easy deployment and scalability.
+This mediator-api project is designed using the Mediator pattern to handle commands and queries. It utilizes .NET 8.0 and provides an organized structure for handling HTTP requests and performing operations in the application layer. Additionally, it's Dockerized for easy deployment and scalability.
 
 ## Description
 
