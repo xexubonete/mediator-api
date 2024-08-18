@@ -5,7 +5,7 @@ using webapi_docker.Queries;
 
 namespace webapi_docker.Controllers
 {
-    public class ProductController : ApiController
+    public class ProductController : ApiController     
     {
 
         /// <summary>Gets all products.</summary>
@@ -68,7 +68,7 @@ namespace webapi_docker.Controllers
         ///   <br />
         /// </returns>
         [HttpPost]
-        [Route("/create")]
+        [Route("create")]
         public async Task<ActionResult<Product>> CreateProduct(CreateProductCommand command)
         {
             var product = await this.Mediator.Send(command);
@@ -87,8 +87,8 @@ namespace webapi_docker.Controllers
         ///   <br />
         /// </returns>
         [HttpPut]
-        [Route("/{Id}")]
-        public async Task<ActionResult<Product>> UpdateProduct(Guid Id, UpdateProductCommand command)
+        [Route("{id}")]
+        public async Task<ActionResult<Product>> UpdateProduct(Guid id, UpdateProductCommand command)
         {
             var product = await this.Mediator.Send(command);
 
@@ -106,7 +106,7 @@ namespace webapi_docker.Controllers
         ///   <br />
         /// </returns>
         [HttpDelete]
-        [Route("/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
             await this.Mediator.Send(new DeleteProductCommand { Id = id });
