@@ -1,3 +1,6 @@
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using webapi_docker;
 using webapi_docker.Interfaces;
 using webapi_docker.Persistence;
@@ -12,15 +15,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Custom : Configurar los comentarios XML en swagger 
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductAPI", Version = "v1" });
+builder.Services.AddSwaggerGen(c =>
+{
+   c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductAPI", Version = "v1" });
 
-//    Ruta al archivo XML de documentaci�n generado
-//    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-//    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-//    c.IncludeXmlComments(xmlPath);
-//});
+//Ruta al archivo XML de documentaci�n generado
+   var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+   var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+   c.IncludeXmlComments(xmlPath);
+});
 
 // Custom : Dependecy injection
 builder.Services.AddInjection(builder.Configuration);
@@ -35,12 +38,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using var scope = app.Services.CreateScope();
+
+var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
+
+dbContext.Database.EnsureCreated();
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
