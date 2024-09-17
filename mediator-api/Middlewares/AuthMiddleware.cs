@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 public class AuthMiddleware
 {
     private readonly RequestDelegate _next;
-    private const string _validApiKey;
+    private readonly IConfiguration _configuration;
 
     public AuthMiddleware(RequestDelegate next, IConfiguration configuration)
     {
         _next = next;
-        _validApiKey = configuration.GetValue<string>("Authentication:ApiKey");
+        _configuration = configuration;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -21,13 +21,13 @@ public class AuthMiddleware
             await context.Response.WriteAsync("Missing authentication");
             return;
         }
-        if (_validApiKey is null || !ValidApiKey.Equals(extractedApiKey))
+        validApiKey = configuration.GetValue<string>("Authentication:ApiKey");
+        if (validApiKey is null || !ValidApiKey.Equals(extractedApiKey))
         {
             context.Response.StatusCode = 401;
             await context.Response.WriteAsync("Authentication failed");
             return;
        ​ }
-       _validApiKey = configuration.GetValue<string>("Authentication:ApiKey");
        await _next(context)
     }
 }
