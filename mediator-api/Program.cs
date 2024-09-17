@@ -14,12 +14,34 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Custom : Configurar los comentarios XML en swagger
 builder.Services.AddSwaggerGen(c =>
 {
-   c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductAPI", Version = "v1" });
+// Configurar el esquema de seguridad de Swagger
+    c.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Name = "api_key",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "API Key Authentication"
+    });
 
-//Ruta al archivo XML de documentaci�n generado
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                }
+            },
+            new List<string>()
+        }
+    });
+   c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductAPI", Version = "v1" });
+   // Custom : Configurar los comentarios XML en swagger
+   //Ruta al archivo XML de documentaci�n generado
    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
    c.IncludeXmlComments(xmlPath);

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-
 public class AuthMiddleware
 {
     private readonly RequestDelegate _next;
@@ -21,13 +18,13 @@ public class AuthMiddleware
             await context.Response.WriteAsync("Missing authentication");
             return;
         }
-        validApiKey = configuration.GetValue<string>("Authentication:ApiKey");
-        if (validApiKey is null || !ValidApiKey.Equals(extractedApiKey))
+        var validApiKey = _configuration.GetValue<string>("Authorization:ApiKey");
+        if (validApiKey is null || !validApiKey.Equals(extractedApiKey))
         {
             context.Response.StatusCode = 401;
             await context.Response.WriteAsync("Authentication failed");
             return;
-       ​ }
-       await _next(context)
+        }
+       await _next(context);
     }
 }
