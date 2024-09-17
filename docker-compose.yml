@@ -2,7 +2,7 @@ version: "2.24.7"
 services:
   mediator-api:
     build: .
-    ports: 
+    ports:
       - "5024:8080"
     depends_on:
       - sqlserver
@@ -14,6 +14,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Sqlserver0001&
+      - Authorization__ApiKey=9a289c1dbcea472ba913c29fbc9f9391
     volumes:
       - sqlserver-data:/var/opt/mssql/data
 volumes:

@@ -18,7 +18,7 @@ RUN dotnet restore
 ## Copiar todo lo demás
 COPY . .
 ## Publicamos nuestro proyecto para que genere las dlls
-RUN dotnet publish -c Release -o /mediator-api/out
+RUN dotnet publish ./mediator-api/mediator-api.csproj -c Release -o /mediator-api/out
 
 ###CONSTRUIMOS LA IMAGEN
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
