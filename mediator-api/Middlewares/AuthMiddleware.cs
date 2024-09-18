@@ -15,14 +15,14 @@ public class AuthMiddleware
         if (!context.Request.Headers.TryGetValue(ApiKeyHeaderName, out var extractedApiKey))
         {
             context.Response.StatusCode = 400;
-            await context.Response.WriteAsync("Missing authentication");
+            await context.Response.WriteAsync("Missing authorization");
             return;
         }
         var validApiKey = _configuration.GetValue<string>("Authorization:ApiKey");
         if (validApiKey is null || !validApiKey.Equals(extractedApiKey))
         {
             context.Response.StatusCode = 401;
-            await context.Response.WriteAsync("Authentication failed");
+            await context.Response.WriteAsync("Authorization failed");
             return;
         }
        await _next(context);
