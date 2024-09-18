@@ -1,5 +1,4 @@
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using webapi_docker;
 using webapi_docker.Interfaces;
@@ -12,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -70,9 +68,14 @@ dbContext.Database.EnsureCreated();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseHttpsRedirection();
+// // }
 
 app.UseMiddleware<AuthMiddleware>();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
