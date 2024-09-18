@@ -20,7 +20,7 @@ namespace webapi_docker.Controllers
 
             if (!products.Any())
             {
-                return NotFound();
+                return NoContent();
             }
 
             return Ok(products);
@@ -69,16 +69,21 @@ namespace webapi_docker.Controllers
         /// </returns>
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Product>> CreateProduct(CreateProductCommand command)
+        public async Task<ActionResult<Product>> CreateProduct(IList<CreateProductCommand> commands)
         {
-            var product = await this.Mediator.Send(command);
+            IList<Product> products = new List<Product>();
+            foreach (var command in commands)
+            {
+                var product = await this.Mediator.Send(command);
+                products.Add(product);
+            }
 
-            if (product == null)
+            if (!products.Any())
             {
                 return BadRequest();
             }
 
-            return Ok(product);
+            return Ok(products);
         }
 
         /// <summary>Updates the product.</summary>
