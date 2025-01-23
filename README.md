@@ -1,75 +1,134 @@
-# Mediator-api with Mediator Pattern and Docker Support
+# 🚀 Mediator API with Docker
 
-This mediator-api project is designed using the Mediator pattern to handle commands and queries. It utilizes .NET 8.0 and provides an organized structure for handling HTTP requests and performing operations in the application layer. Additionally, it's Dockerized for easy deployment and scalability.
+A .NET Core Web API project implementing the Mediator pattern with CQRS, Entity Framework Core, and Docker support.
 
-## Description
+## 📋 Overview
 
-The Mediator pattern facilitates communication between components of a system without them directly knowing each other. In this project, the Mediator pattern is implemented to handle commands and queries within the application, enabling lower coupling between different components and better separation of concerns.
+This project is a RESTful API for managing products, built with:
+- .NET 8.0
+- Entity Framework Core
+- MediatR (CQRS pattern)
+- SQL Server
+- Docker
+- Swagger/OpenAPI
 
-## Project Structure
+## ⭐ Features
 
-- **Controllers**: Contains controllers that handle incoming HTTP requests and route them to the corresponding handlers.
-- **Mediator**: Contains classes related to implementing the Mediator pattern, such as the Mediator itself, commands, queries, and command/query handlers.
-- **Interfaces**: Contains interfaces used for application services that encapsulate business logic. These interfaces are implemented by command/query handlers to perform the desired operations.
-- **Dockerfile**: Defines the Docker image configuration for building and running the application in a containerized environment.
+- Complete CRUD operations for Products
+- API Key Authentication
+- Swagger Documentation
+- Docker containerization
+- SQL Server database
+- Entity Framework Core with Code First approach
+- CQRS implementation using MediatR
 
-## System Requirements
+## 📁 Project Structure
 
-- .NET 8.0 or higher
-- Visual Studio 2022 or a compatible code editor
-- Docker (if running the application in a containerized environment)
+```
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── docker-compose.yml
+├── mediator-api
+│   ├── Commands
+│   │   ├── CreateProductCommand.cs
+│   │   ├── DeleteProductCommand.cs
+│   │   └── UpdateProductCommand.cs
+│   ├── Controllers
+│   │   ├── ApiController.cs
+│   │   └── ProductController.cs
+│   ├── DependencyInjection.cs
+│   ├── Entities
+│   │   └── Product.cs
+│   ├── Interfaces
+│   │   └── IApiDbContext.cs
+│   ├── Middlewares
+│   │   └── AuthMiddleware.cs
+│   ├── Persistence
+│   │   ├── ApiDbContext.cs
+│   │   └── Migrations
+│   │       ├── 20240817183205_Initial_Migration.Designer.cs
+│   │       ├── 20240817183205_Initial_Migration.cs
+│   │       └── ApiDbContextModelSnapshot.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Queries
+│   │   ├── GetAllProductsQuery.cs
+│   │   ├── GetProductByIdQuery.cs
+│   │   └── GetProductByNameQuery.cs
+│   ├── appsettings.Development.json
+│   └── appsettings.json
+├── mediator-api.Test
+│   ├── Commands
+│   │   └── CreateProductCommandTests.cs
+│   └── mediator-api.Test.csproj
+└── mediator-api.sln
+```
 
-## Installation
+## 🏁 Getting Started
 
-1. Clone this repository to your local machine:
-   
-   `git clone https://github.com/xexubonete/webapi-docker.git`
+### Prerequisites
 
-3. Open the project in Visual Studio or your preferred code editor.
+- Docker Desktop
+- .NET 8.0 SDK
+- SQL Server
 
-4. Build the solution and run the application.
+### Running with Docker
 
-## Usage
+1. Clone the repository
+2. Navigate to the root directory
+3. Run Docker Compose:
+```bash
+docker-compose up -d
+```
 
-- Access the endpoints provided by the controllers to send HTTP requests and execute commands or queries.
-- Command and query handlers will process the requests and return the corresponding responses.
+The API will be available at `http://localhost:5024/swagger`
 
-## Docker Support
+### 🔐 API Authentication
 
-This project is Dockerized, allowing easy deployment and scalability. To run the application using Docker, follow these steps:
+All endpoints are protected with API Key authentication. Include the following header in your requests:
+```
+api_key: <your_api_key>
+```
 
-1. Make sure you have Docker installed on your machine.
-2. Navigate to the root directory of the project in your terminal.
-3. Build the Docker image using the provided Dockerfile:
+## 🛣️ API Endpoints
 
-   `docker build -t webapi-app .`
-   
-5. Once the image is built, run a Docker container:
+### Products
 
-   `docker run -d -p 8080:80 --name webapi-container webapi-app`
+- `GET /api/Product` - Get all products
+- `GET /api/Product/id` - Get product by ID
+- `GET /api/Product/name` - Get product by name
+- `POST /api/Product/create` - Create new product(s)
+- `PUT /api/Product/{id}` - Update a product
+- `DELETE /api/Product/{id}` - Delete a product
 
-6. Access the application through `http://localhost:8080` in your web browser or any HTTP client.
+## 💾 Database
 
-## Contribution
+The project uses SQL Server with Entity Framework Core. The database will be automatically created on first run with the initial migration.
 
-If you wish to contribute to this project, follow these steps:
+Connection string (in Docker environment):
+```
+Server=YourServer;Database=CrudApi;User Id=YourUsername;Password=YourPassword;TrustServerCertificate=True
+```
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/feature-name`).
-3. Make your changes and commit (`git commit -am 'Add new feature'`).
-4. Push the branch (`git push origin feature/feature-name`).
-5. Create a new pull request.
+## 👨‍💻 Development
 
-## Authors
+### Adding New Migrations
 
-- Jesus Bonete (xexubonete)
+```bash
+dotnet ef migrations add MigrationName
+dotnet ef database update
+```
 
-## License
+### Running Tests
 
-This project is licensed under the [MIT License](LICENSE).
+```bash
+dotnet test
+```
 
+## 📄 License
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-
-
-
+The API will be available at `http://localhost:5024/swagger`
