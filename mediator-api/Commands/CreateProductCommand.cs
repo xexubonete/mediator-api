@@ -4,28 +4,48 @@ using webapi_docker.Interfaces;
 
 namespace webapi_docker.Commands
 {
+    /// <summary>
+    /// Command to create a new product
+    /// </summary>
     public class CreateProductCommand : IRequest<Product>
     {
-        /// <summary>Gets or sets the identifier.</summary>
-        /// <value>The identifier.</value>
+        /// <summary>
+        /// Gets or sets the product identifier
+        /// </summary>
         public Guid Id { get; set; }
 
-        /// <summary>Gets or sets the name.</summary>
-        /// <value>The name.</value>
+        /// <summary>
+        /// Gets or sets the product name
+        /// </summary>
         public string? Name { get; set; }
 
-        /// <summary>Gets or sets the price.</summary>
-        /// <value>The price.</value>
+        /// <summary>
+        /// Gets or sets the product price
+        /// </summary>
         public double Price { get; set; }
 
-        public class CreateProductCommandHandler(IApiDbContext context) : IRequestHandler<CreateProductCommand, Product> 
+        /// <summary>
+        /// Handler for the create product command
+        /// </summary>
+        public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product>
         {
-            private readonly IApiDbContext _context = context;
+            private readonly IApiDbContext _context;
 
-            /// <summary>Handles a request</summary>
-            /// <param name="request">The request</param>
+            /// <summary>
+            /// Initializes a new instance of the handler
+            /// </summary>
+            /// <param name="context">Database context</param>
+            public CreateProductCommandHandler(IApiDbContext context)
+            {
+                _context = context;
+            }
+
+            /// <summary>
+            /// Handles the product creation
+            /// </summary>
+            /// <param name="request">Creation command</param>
             /// <param name="cancellationToken">Cancellation token</param>
-            /// <returns>Response from the request</returns>
+            /// <returns>The created product</returns>
             public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
             {
                 try

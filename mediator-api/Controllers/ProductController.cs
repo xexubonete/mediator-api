@@ -5,14 +5,15 @@ using webapi_docker.Queries;
 
 namespace webapi_docker.Controllers
 {
+    /// <summary>
+    /// Controller for managing product CRUD operations
+    /// </summary>
     public class ProductController : ApiController     
     {
-
-        /// <summary>Gets all products.</summary>
-        /// <param name="query">The query.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Gets all products
+        /// </summary>
+        /// <returns>List of products</returns>
         [HttpGet]
         public async Task<ActionResult<IList<Product>>> GetAllProducts() 
         {
@@ -26,11 +27,11 @@ namespace webapi_docker.Controllers
             return Ok(products);
         }
 
-        /// <summary>Gets the product by identifier.</summary>
-        /// <param name="query">The query.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Gets a product by its identifier
+        /// </summary>
+        /// <param name="id">Product identifier</param>
+        /// <returns>The found product</returns>
         [HttpGet("id")]
         public async Task<ActionResult<Product>> GetProductById(Guid id)
         {
@@ -44,11 +45,11 @@ namespace webapi_docker.Controllers
             return Ok(product);
         }
 
-        /// <summary>Gets the name of the product by.</summary>
-        /// <param name="query">The query.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Gets a product by its name
+        /// </summary>
+        /// <param name="Name">Product name to search</param>
+        /// <returns>The found product</returns>
         [HttpGet("name")]
         public async Task<ActionResult<Product>> GetProductByName(string Name)
         {
@@ -62,11 +63,11 @@ namespace webapi_docker.Controllers
             return Ok(product);
         }
 
-        /// <summary>Creates the product.</summary>
-        /// <param name="command">The command.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Creates new products
+        /// </summary>
+        /// <param name="commands">List of commands to create products</param>
+        /// <returns>The created products</returns>
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult<Product>> CreateProduct(IList<CreateProductCommand> commands)
@@ -86,11 +87,12 @@ namespace webapi_docker.Controllers
             return Ok(products);
         }
 
-        /// <summary>Updates the product.</summary>
-        /// <param name="command">The command.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Updates an existing product
+        /// </summary>
+        /// <param name="id">Product identifier</param>
+        /// <param name="command">Command with updated data</param>
+        /// <returns>The updated product</returns>
         [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult<Product>> UpdateProduct(Guid id, UpdateProductCommand command)
@@ -105,11 +107,11 @@ namespace webapi_docker.Controllers
             return Ok(product);
         }
 
-        /// <summary>Deletes the product.</summary>
-        /// <param name="command">The command.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Deletes a product
+        /// </summary>
+        /// <param name="id">Identifier of the product to delete</param>
+        /// <returns>Operation result</returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)

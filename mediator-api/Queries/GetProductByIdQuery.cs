@@ -5,20 +5,38 @@ using webapi_docker.Interfaces;
 
 namespace webapi_docker.Queries
 {
+    /// <summary>
+    /// Query to retrieve a product by its identifier
+    /// </summary>
     public class GetProductByIdQuery : IRequest<Product>
     {
-        /// <summary>Gets or sets the identifier.</summary>
-        /// <value>The identifier.</value>
+        /// <summary>
+        /// Gets or sets the product identifier
+        /// </summary>
         public Guid Id { get; set; }
 
-        public class GetProductByIdQueryHandler(IApiDbContext context) : IRequestHandler<GetProductByIdQuery, Product>
+        /// <summary>
+        /// Handler for retrieving a product by its identifier
+        /// </summary>
+        public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product>
         {
-            private readonly IApiDbContext _context = context;
+            private readonly IApiDbContext _context;
 
-            /// <summary>Handles a request</summary>
-            /// <param name="request">The request</param>
+            /// <summary>
+            /// Initializes a new instance of the handler
+            /// </summary>
+            /// <param name="context">Database context</param>
+            public GetProductByIdQueryHandler(IApiDbContext context)
+            {
+                _context = context;
+            }
+
+            /// <summary>
+            /// Handles the retrieval of a product by its identifier
+            /// </summary>
+            /// <param name="request">Query request</param>
             /// <param name="cancellationToken">Cancellation token</param>
-            /// <returns>Response from the request</returns>
+            /// <returns>The found product</returns>
             public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
             {
                 try

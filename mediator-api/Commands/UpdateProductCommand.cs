@@ -4,24 +4,48 @@ using webapi_docker.Interfaces;
 
 namespace webapi_docker.Commands
 {
+    /// <summary>
+    /// Command to update an existing product
+    /// </summary>
     public class UpdateProductCommand : IRequest<Product>
     {
-        /// <summary>Gets or sets the identifier.</summary>
-        /// <value>The identifier.</value>
+        /// <summary>
+        /// Gets or sets the product identifier
+        /// </summary>
         public Guid Id { get; set; }
 
-        /// <summary>Gets or sets the name.</summary>
-        /// <value>The name.</value>
+        /// <summary>
+        /// Gets or sets the product name
+        /// </summary>
         public string? Name { get; set; }
 
-        /// <summary>Gets or sets the price.</summary>
-        /// <value>The price.</value>
+        /// <summary>
+        /// Gets or sets the product price
+        /// </summary>
         public double Price { get; set; }
 
-        public class UpdateProductCommandHandler(IApiDbContext context) : IRequestHandler<UpdateProductCommand, Product>
+        /// <summary>
+        /// Handler for updating a product
+        /// </summary>
+        public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Product>
         {
-            private readonly IApiDbContext _context = context;
+            private readonly IApiDbContext _context;
 
+            /// <summary>
+            /// Initializes a new instance of the handler
+            /// </summary>
+            /// <param name="context">Database context</param>
+            public UpdateProductCommandHandler(IApiDbContext context)
+            {
+                _context = context;
+            }
+
+            /// <summary>
+            /// Handles the product update
+            /// </summary>
+            /// <param name="request">Update command</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <returns>The updated product</returns>
             public async Task<Product> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
             {
                 try

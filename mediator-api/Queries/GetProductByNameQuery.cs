@@ -5,20 +5,38 @@ using webapi_docker.Interfaces;
 
 namespace webapi_docker.Queries
 {
+    /// <summary>
+    /// Query to retrieve a product by its name
+    /// </summary>
     public class GetProductByNameQuery : IRequest<Product>
     {
-        /// <summary>Gets or sets the name.</summary>
-        /// <value>The name.</value>
+        /// <summary>
+        /// Gets or sets the product name
+        /// </summary>
         public string? Name { get; set; }
 
-        public class GetProductByNameQueryHandler(IApiDbContext context) : IRequestHandler<GetProductByNameQuery, Product>
+        /// <summary>
+        /// Handler for retrieving a product by its name
+        /// </summary>
+        public class GetProductByNameQueryHandler : IRequestHandler<GetProductByNameQuery, Product>
         {
-            private readonly IApiDbContext _context = context;
+            private readonly IApiDbContext _context;
 
-            /// <summary>Handles a request</summary>
-            /// <param name="request">The request</param>
+            /// <summary>
+            /// Initializes a new instance of the handler
+            /// </summary>
+            /// <param name="context">Database context</param>
+            public GetProductByNameQueryHandler(IApiDbContext context)
+            {
+                _context = context;
+            }
+
+            /// <summary>
+            /// Handles the retrieval of a product by its name
+            /// </summary>
+            /// <param name="request">Query request</param>
             /// <param name="cancellationToken">Cancellation token</param>
-            /// <returns>Response from the request</returns>
+            /// <returns>The found product</returns>
             public async Task<Product> Handle(GetProductByNameQuery request, CancellationToken cancellationToken)
             {
                 try

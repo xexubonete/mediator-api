@@ -5,12 +5,33 @@ using webapi_docker.Interfaces;
 
 namespace webapi_docker.Queries
 {
+    /// <summary>
+    /// Query to retrieve all products
+    /// </summary>
     public class GetAllProductsQuery : IRequest<IList<Product>>
     {
-        public class GetAllProductsQueryHandler(IApiDbContext context) : IRequestHandler<GetAllProductsQuery, IList<Product>>
+        /// <summary>
+        /// Handler for retrieving all products
+        /// </summary>
+        public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, IList<Product>>
         {
-            private readonly IApiDbContext _context = context;
+            private readonly IApiDbContext _context;
 
+            /// <summary>
+            /// Initializes a new instance of the handler
+            /// </summary>
+            /// <param name="context">Database context</param>
+            public GetAllProductsQueryHandler(IApiDbContext context)
+            {
+                _context = context;
+            }
+
+            /// <summary>
+            /// Handles the retrieval of all products
+            /// </summary>
+            /// <param name="request">Query request</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <returns>List of all products</returns>
             public async Task<IList<Product>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
             {
                 try
